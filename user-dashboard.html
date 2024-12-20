@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>User Dashboard</h1>
+  <button onclick="logout()">Logout</button>
+
+  <h2>Add Option</h2>
+  <form id="add-form">
+    <input type="text" id="add-option" placeholder="Option" required>
+    <input type="number" id="add-qty" placeholder="Quantity" required min="1" max="25">
+    <button type="submit">Add</button>
+  </form>
+
+  <h2>Remove Option</h2>
+  <form id="remove-form">
+    <input type="text" id="remove-option" placeholder="Option" required>
+    <button type="submit">Remove</button>
+  </form>
+
+  <h2>Action History</h2>
+  <table id="action-table">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Option</th>
+        <th>Quantity</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data will be dynamically added here -->
+    </tbody>
+  </table>
+
+  <script src="script.js"></script>
+</body>
+</html>
