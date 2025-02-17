@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-  <div class="login-container">
-    <h2>Login</h2>
-    <form id="login-form">
-      <input type="text" id="username" placeholder="Username" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
-    <p id="error-message" style="color:red; display:none;">Invalid credentials</p>
-  </div>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white">
+    <div class="bg-white text-gray-800 p-8 rounded-2xl shadow-2xl text-center">
+        <h1 class="text-3xl font-bold mb-4">QR Code Generator</h1>
+        <input type="text" id="text" placeholder="Enter text or URL" class="w-full p-2 mb-4 border-2 border-purple-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300">
+        <input type="text" id="filename" placeholder="Enter download filename" class="w-full p-2 mb-4 border-2 border-purple-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300">
+        <button onclick="generateQRCode()" class="w-full bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-800 transition mb-4">Generate QR Code</button>
+        <div class="flex justify-center mt-6">
+            <canvas id="qrcode" class="mx-auto"></canvas>
+        </div>
+        <a id="downloadBtn" class="hidden mt-4 bg-green-600 text-white p-2 rounded-lg hover:bg-green-800 transition">Download QR Code</a>
+    </div>
 
-  <script src="script.js"></script>
+    <script>
+        function generateQRCode() {
+            const text = document.getElementById('text').value;
+            const filename = document.getElementById('filename').value || 'qrcode';
+            if (text.trim() === '') {
+                alert('Please enter text or URL');
+                return;
+            }
+            const canvas = document.getElementById('qrcode');
+            QRCode.toCanvas(canvas, text, function (error) {
+                if (error) console.error(error);
+                const downloadBtn = document.getElementById('downloadBtn');
+                const dataURL = canvas.toDataURL('image/png');
+                downloadBtn.href = dataURL;
+                downloadBtn.download = `${filename}.png`;
+                downloadBtn.classList.remove('hidden');
+            });
+        }
+    </script>
 </body>
 </html>
